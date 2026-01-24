@@ -1,24 +1,11 @@
-import random
 from time import sleep
-import tkinter as tk
-import ttkbootstrap as ttk
-
-
-class App(tk.Tk):
-    def __init__(self):
-        super().__init__()
-
+from orig import gen_orig
 
 class BubbleSort():
-    def __init__(self, min:int=1, max:int=255):
-        self.bubble_sort(self.gen_orig(min, max))
-    
-    def gen_orig(self, min, max):
-        self.orig = [i for i in range(random.randint(min,random.randint(2,max)))]
-        random.shuffle(self.orig)
+    def __init__(self, min=10, max=20):
+        self.orig = gen_orig(min, max)
         print(self.orig)
-        sleep(0.01)
-        return self.orig
+        self.bubble_sort(self.orig)
     
     def bubble_sort(self, target:list):
         unsorted = True
@@ -31,14 +18,16 @@ class BubbleSort():
                     if i > k:
                         target[target.index(k)], target[target.index(i)] = i, k
                         changed = True
-                        print(target)
-                        sleep(0.01)
+                        print(f"\r{target}", end="", flush=True)
+                        break
                     else:
                         continue
                 except IndexError:
                     if not changed:
                         unsorted = False
+                        print(f"\r{target}", flush=True)                       
                         break
+                        
     
 if __name__ == "__main__":
-    App()
+    BubbleSort()
